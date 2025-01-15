@@ -7,6 +7,7 @@
  * @height: height of the tree
  * Return: pointer to parent node
  */
+
 heap_t *find_parent_node(heap_t *root, int height)
 {
     if (root == NULL || height < 2)
