@@ -15,7 +15,7 @@ heap_t *find_parent_node(heap_t *root, int height)
     if (height == 2)
     {
         if (root->left == NULL || root->right == NULL)
-            return (root);
+             return (root);
         else
             return (NULL);
     }
@@ -38,6 +38,7 @@ void swap_nodes(heap_t *node1, heap_t *node2)
         return;
 
     int temp = node1->n;
+
     node1->n = node2->n;
     node2->n = temp;
 }
@@ -70,6 +71,7 @@ heap_t *heap_insert(heap_t **root, int value)
         return (NULL);
 
     heap_t *new_node = binary_tree_node(NULL, value);
+
     if (new_node == NULL)
         return (NULL);
 
@@ -80,10 +82,12 @@ heap_t *heap_insert(heap_t **root, int value)
     }
 
     int height = height_tree(*root);
+
     heap_t *parent = find_parent_node(*root, height);
     if (parent == NULL)
     {
         heap_t *move = *root;
+
         while (move->left != NULL)
             move = move->left;
         parent = move;
