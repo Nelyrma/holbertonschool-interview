@@ -16,7 +16,7 @@ heap_t *find_parent_node(heap_t *root, int height)
     if (height == 2)
     {
         if (root->left == NULL || root->right == NULL)
-             return (root);
+            return (root);
         else
             return (NULL);
     }
