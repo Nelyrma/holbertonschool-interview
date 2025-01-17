@@ -22,6 +22,7 @@ heap_t *find_parent_node(heap_t *root, int height)
 	}
 
 	heap_t *parent = find_parent_node(root->left, height - 1);
+
 	if (parent == NULL)
 		parent = find_parent_node(root->right, height - 1);
 
@@ -85,6 +86,7 @@ heap_t *heap_insert(heap_t **root, int value)
 	int height = height_tree(*root);
 
 	heap_t *parent = find_parent_node(*root, height);
+
 	if (parent == NULL)
 	{
 		heap_t *move = *root;
