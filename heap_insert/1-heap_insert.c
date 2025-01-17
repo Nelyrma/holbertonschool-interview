@@ -10,22 +10,22 @@
 
 heap_t *find_parent_node(heap_t *root, int height)
 {
-    if (root == NULL || height < 2)
-        return (NULL);
+	if (root == NULL || height < 2)
+		return (NULL);
 
-    if (height == 2)
-    {
-        if (root->left == NULL || root->right == NULL)
-            return (root);
-        else
-            return (NULL);
-    }
+	if (height == 2)
+	{
+		if (root->left == NULL || root->right == NULL)
+			return (root);
+		else
+			return (NULL);
+	}
 
-    heap_t *parent = find_parent_node(root->left, height - 1);
-    if (parent == NULL)
-        parent = find_parent_node(root->right, height - 1);
+	heap_t *parent = find_parent_node(root->left, height - 1);
+	if (parent == NULL)
+		parent = find_parent_node(root->right, height - 1);
 
-    return (parent);
+	return (parent);
 }
 
 /**
@@ -35,13 +35,13 @@ heap_t *find_parent_node(heap_t *root, int height)
  */
 void swap_nodes(heap_t *node1, heap_t *node2)
 {
-    if (node1 == NULL || node2 == NULL)
-        return;
+	if (node1 == NULL || node2 == NULL)
+		return;
 
-    int temp = node1->n;
+	int temp = node1->n;
 
-    node1->n = node2->n;
-    node2->n = temp;
+	node1->n = node2->n;
+	node2->n = temp;
 }
 
 /**
@@ -51,13 +51,13 @@ void swap_nodes(heap_t *node1, heap_t *node2)
  */
 int height_tree(const binary_tree_t *tree)
 {
-    if (tree == NULL)
-        return (0);
+	if (tree == NULL)
+		return (0);
 
-    int left_height = height_tree(tree->left);
-    int right_height = height_tree(tree->right);
+	int left_height = height_tree(tree->left);
+	int right_height = height_tree(tree->right);
 
-    return ((left_height > right_height ? left_height : right_height) + 1);
+	return ((left_height > right_height ? left_height : right_height) + 1);
 }
 
 /**
@@ -68,44 +68,44 @@ int height_tree(const binary_tree_t *tree)
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-    if (root == NULL)
-        return (NULL);
+	if (root == NULL)
+		return (NULL);
 
-    heap_t *new_node = binary_tree_node(NULL, value);
+	heap_t *new_node = binary_tree_node(NULL, value);
 
-    if (new_node == NULL)
-        return (NULL);
+	if (new_node == NULL)
+		return (NULL);
 
-    if (*root == NULL)
-    {
-        *root = new_node;
-        return (new_node);
-    }
+	if (*root == NULL)
+	{
+		*root = new_node;
+		return (new_node);
+	}
 
-    int height = height_tree(*root);
+	int height = height_tree(*root);
 
-    heap_t *parent = find_parent_node(*root, height);
-    if (parent == NULL)
-    {
-        heap_t *move = *root;
+	heap_t *parent = find_parent_node(*root, height);
+	if (parent == NULL)
+	{
+		heap_t *move = *root;
 
-        while (move->left != NULL)
-            move = move->left;
-        parent = move;
-    }
+		while (move->left != NULL)
+			move = move->left;
+		parent = move;
+	}
 
-    if (parent->left == NULL)
-        parent->left = new_node;
-    else
-        parent->right = new_node;
+	if (parent->left == NULL)
+		parent->left = new_node;
+	else
+		parent->right = new_node;
 
-    new_node->parent = parent;
+	new_node->parent = parent;
 
-    while (new_node->parent != NULL && new_node->n > new_node->parent->n)
-    {
-        swap_nodes(new_node, new_node->parent);
-        new_node = new_node->parent;
-    }
+	while (new_node->parent != NULL && new_node->n > new_node->parent->n)
+	{
+		swap_nodes(new_node, new_node->parent);
+		new_node = new_node->parent;
+	}
 
-    return (new_node);
+	return (new_node);
 }
