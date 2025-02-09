@@ -1,34 +1,39 @@
 #include "lists.h"
 
 /**
- * check_palindrome - checks if a singly linked list is a palindrome
- * @left: double pointer to head of the list
- * @right: pointer to the tail of the list
+ * validate_palindrome - Recursively checks if a singly linked list is a palindrome.
+ * @front: Double pointer to the head of the list.
+ * @back: Pointer to the current node in recursion (moving towards tail).
  *
- * Return: 0 if it's not a palindrome, 1 otherwise
+ * Return: 1 if it's a palindrome, 0 otherwise.
  */
-int check_palindrome(listint_t **left, listint_t *right)
+int validate_palindrome(listint_t **front, listint_t *back)
 {
-    int palindrome;
+    int is_valid;
 
-    if (right == NULL)
+    if (!back)
         return (1);
-    palindrome = check_palindrome(left, right->next);
 
-    if (palindrome == 0 || (*left)->n != right->n)
+    is_valid = validate_palindrome(front, back->next);
+
+    if (!is_valid || (*front)->n != back->n)
         return (0);
-    (*left) = (*left)->next;
 
-    return (palindrome);
+    *front = (*front)->next;
+
+    return (1);
 }
 
 /**
- * is_palindrome - checks if a singly linked list is a palindrome
- * @head: double pointer to head of the list
+ * is_palindrome - Determines if a singly linked list is a palindrome.
+ * @head: Double pointer to the head of the list.
  *
- * Return: 0 if it's not a palindrome, 1 otherwise
+ * Return: 1 if it's a palindrome, 0 otherwise.
  */
 int is_palindrome(listint_t **head)
 {
-    return (check_palindrome(head, *head));
+    if (!head || !*head)
+        return (1);
+
+    return (validate_palindrome(head, *head));
 }
