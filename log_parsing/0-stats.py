@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Script that reads stdin line by line and computes metrics."""
+
 import random
 import sys
 from time import sleep
