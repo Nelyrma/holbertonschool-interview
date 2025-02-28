@@ -1,4 +1,5 @@
 #include "lists.h"
+#include <stddef.h>
 
 /**
  * validate_palindrome - Recursively checks if a singly linked list is a palindrome.
