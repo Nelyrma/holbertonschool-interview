@@ -29,7 +29,7 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
 	{
 		printf(CHECKED_VALUE, express->index, express->n);
 	}
-	else 
+	else
 	{
 		last = newNode;
 		while (last->next != NULL)
