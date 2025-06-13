@@ -42,7 +42,7 @@ void merge(int *array, int *arrCopy, int left, int right, int mid)
 		i++;
 		start++;
 	}
-	while (end <= right)
+	while (end < right)
 	{
 		array[i] = arrCopy[end];
 		i++;
