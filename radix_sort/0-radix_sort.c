@@ -2,66 +2,81 @@
 #include <stdlib.h>
 
 /**
- * get_max - finds the max value in the table
+ * get_max - Finds the maximum value in an array
+ * @array: Array of integers
+ * @size: Size of the array
+ *
+ * Return: The maximum value
  */
 static int get_max(int *array, size_t size)
 {
-    int max = array[0];
+	size_t i;
+	int max = array[0];
 
-    for (size_t i = 1; i < size; i++)
-        if (array[i] > max)
-            max = array[i];
-    return (max);
+	for (i = 1; i < size; i++)
+	{
+		if (array[i] > max)
+			max = array[i];
+	}
+	return (max);
 }
 
 /**
- * counting_sort_digit - sort by count according to a specific digit
+ * counting_sort_digit - Sorts an array based on a specific digit
+ * @array: Array to sort
+ * @size: Size of the array
+ * @exp: Exponent (1, 10, 100, etc.) to extract the digit
  */
 static void counting_sort_digit(int *array, size_t size, int exp)
 {
-    int *output = malloc(size * sizeof(int));
-    int count[10] = {0};
+	int count[10] = {0};
+	int *output;
+	size_t i;
+	int digit;
 
-    if (!output)
-        return;
+	output = malloc(sizeof(int) * size);
+	if (!output)
+		return;
 
-    /** Count occurrences of digit (array[i] / exp) % 10 */
-    for (size_t i = 0; i < size; i++)
-        count[(array[i] / exp) % 10]++;
+	for (i = 0; i < size; i++)
+	{
+		digit = (array[i] / exp) % 10;
+		count[digit]++;
+	}
 
-    /** Sum of counts */
-    for (int i = 1; i < 10; i++)
-        count[i] += count[i - 1];
+	for (i = 1; i < 10; i++)
+		count[i] += count[i - 1];
 
-    /** Build sorted array */
-    for (ssize_t i = size - 1; i >= 0; i--)
-    {
-        int digit = (array[i] / exp) % 10;
+	for (i = size; i > 0; i--)
+	{
+		digit = (array[i - 1] / exp) % 10;
+		output[count[digit] - 1] = array[i - 1];
+		count[digit]--;
+	}
 
-        output[count[digit] - 1] = array[i];
-        count[digit]--;
-    }
+	for (i = 0; i < size; i++)
+		array[i] = output[i];
 
-    /** Copy to original array */
-    for (size_t i = 0; i < size; i++)
-        array[i] = output[i];
-
-    free(output);
+	free(output);
 }
 
 /**
- * radix_sort - sort the array using radix sort
+ * radix_sort - Sorts an array using LSD Radix Sort algorithm
+ * @array: Array of integers
+ * @size: Size of the array
  */
 void radix_sort(int *array, size_t size)
 {
-    if (!array || size < 2)
-        return;
+	int max, exp;
 
-    int max = get_max(array, size);
+	if (!array || size < 2)
+		return;
 
-    for (int exp = 1; max / exp > 0; exp *= 10)
-    {
-        counting_sort_digit(array, size, exp);
-        print_array(array, size); // Display for each significant digit
-    }
+	max = get_max(array, size);
+
+	for (exp = 1; max / exp > 0; exp *= 10)
+	{
+		counting_sort_digit(array, size, exp);
+		print_array(array, size);
+	}
 }
