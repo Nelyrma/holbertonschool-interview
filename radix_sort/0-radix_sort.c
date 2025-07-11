@@ -7,10 +7,11 @@
 static int get_max(int *array, size_t size)
 {
     int max = array[0];
+
     for (size_t i = 1; i < size; i++)
         if (array[i] > max)
             max = array[i];
-    return max;
+    return (max);
 }
 
 /**
@@ -24,23 +25,24 @@ static void counting_sort_digit(int *array, size_t size, int exp)
     if (!output)
         return;
 
-    // Count occurrences of digit (array[i] / exp) % 10
+    /** Count occurrences of digit (array[i] / exp) % 10 */
     for (size_t i = 0; i < size; i++)
         count[(array[i] / exp) % 10]++;
 
-    // Sum of counts
+    /** Sum of counts */
     for (int i = 1; i < 10; i++)
         count[i] += count[i - 1];
 
-    // Build sorted array
+    /** Build sorted array */
     for (ssize_t i = size - 1; i >= 0; i--)
     {
         int digit = (array[i] / exp) % 10;
+
         output[count[digit] - 1] = array[i];
         count[digit]--;
     }
 
-    // Copy to original array
+    /** Copy to original array */
     for (size_t i = 0; i < size; i++)
         array[i] = output[i];
 
